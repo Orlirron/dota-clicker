@@ -57,6 +57,9 @@ btnHit.addEventListener('click', function() {
         creepArmor = creepArmor + 2; // Кожен левел +2 броні
         
         // Відновлюємо ХП до НОВОГО максимуму
+        maxHpText.textContent = creepMaxHP; // Оновлюємо праву цифру (наприклад, стане 700)
+        hpBar.max = creepMaxHP; // Збільшуємо місткість самої смужки!
+        armorText.textContent = creepArmor;
         creepCurrentHP = creepMaxHP; 
         
         // Даємо БІЛЬШЕ голди за вбивство товстого кріпа (наприклад, +50 за кожен левел)
@@ -65,10 +68,12 @@ btnHit.addEventListener('click', function() {
         // ------------------------------------
 
 // --- НОВИЙ ВІЗУАЛ ---
-        maxHpText.textContent = creepMaxHP; // Оновлюємо праву цифру (наприклад, стане 700)
-        hpBar.max = creepMaxHP; // Збільшуємо місткість самої смужки!
-        armorText.textContent = creepArmor;
+    //    maxHpText.textContent = creepMaxHP; // Оновлюємо праву цифру (наприклад, стане 700)
+     //   hpBar.max = creepMaxHP; // Збільшуємо місткість самої смужки!
+     //   armorText.textContent = creepArmor;
+      //  levelText.textContent = creeplevel;
         // --------------------
+        levelText.textContent = creepLevel;
         
         msg.textContent = `Кріп помер! Наступний рівень: ${creepLevel}. Нагорода: ${killReward} голди.`;
         msg.style.color = "#ffd700";
