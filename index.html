@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dota Clicker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Блок Кріпа (Додали броню) -->
+    <div>
+        <h2>Здоров'я кріпа: <span id="hpText">500</span> / 500</h2>
+        <progress id="hpBar" value="500" max="500" style="width: 400px; height: 30px;"></progress>
+        <h3>Броня кріпа: <span id="armorText">10</span></h3>
+    </div>
+
+    <button id="hitCreep">Вдарити кріпа</button>
+    <hr>
+    
+    <!-- Наш інвентар -->
+    <h3>Твоя шкода: <span id="damageText">40</span></h3>
+    <h1>Моя голда: <span id="goldCounter">0</span></h1>
+    
+    <hr>
+    <!-- Крамниця (Додали Дезолятор) -->
+    <h2>Крамниця:</h2>
+    <button id="buyQuellingBlade">Купити Quelling Blade (Ціна: 200) | +20 Шкоди</button>
+    <br><br>
+    <button id="buyDemonEdge">Купити Demon Edge (Ціна: 1000) | +100 Шкоди</button>
+    <br><br>
+    <button id="buyCrystalys">Купити Crystalys (Ціна: 300) | +30% шанс кріта</button>
+    <br><br>
+    <button id="buyDesolator">Купити Desolator (Ціна: 800) | -15 броні цілі</button>
+    <br><br>
+    <button id="buyMidas">Купити Hand of Midas (Ціна: 1500) | +50 золота кожну секунду</button>
+    <br><br>
+    <button id="buySkadi">Купити Eye Of Skadi (Ціна:1200) | - 10 здоров'я за секунду </button>
+        <p id="message"></p>
+
+    
+    <!-- Цей тег підключає наш майбутній JS файл. Пиши його ПЕРЕД закриваючим тегом </body> -->
+    <script src="script.js"></script>
+</body>
+</html>
