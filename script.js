@@ -1,4 +1,4 @@
-let gold = 2000;
+let gold = 0;
 let damage = 40; 
 let critChance = 0; 
 let creepRegen = 15; // Кріп буде відновлювати 15 ХП кожну секунду
