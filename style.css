@@ -1,13 +1,26 @@
-/* 1. Стилюємо всю карту (фон сторінки) */
 body {
-    background-color: #1c1c1c; /* Темно-сірий, майже чорний колір фону */
-    color: #ffffff; /* Увесь стандартний текст робимо білим */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Міняємо нудний шрифт на сучасний */
-    text-align: center; /* Центруємо весь текст і елементи по середині екрану */
-    margin-top: 50px; /* Трохи відступаємо зверху, щоб не прилипало до краю браузера */
+    /* Твоє посилання на фон вставляється всередині url('...') */
+    background-image: url('https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/backgrounds/greyfade.jpg'); 
+    background-size: cover; /* Розтягує картинку на весь екран без спотворень */
+    background-position: center; /* Центрує картинку */
+    background-attachment: fixed; /* Фон стоїть на місці, коли ти скролиш сторінку */
+    
+    color: #ffffff; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    text-align: center; 
+    margin-top: 50px; 
+}
+
+div {
+    background-color: rgba(0, 0, 0, 0.7); /* Чорний колір з прозорістю 70% */
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block; /* Щоб блок не розтягувався на всю ширину екрану */
+    margin-bottom: 20px;
 }
 
 /* 2. Стилюємо наше Золото (тег <h1>) */
+
 h1 {
     color: #ffd700; /* Класичний золотий колір (HEX-код) */
     text-shadow: 2px 2px 5px #000000; /* Додаємо чорну тінь для об'єму */

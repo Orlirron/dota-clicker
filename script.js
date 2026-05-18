@@ -2,6 +2,7 @@ let gold = 0;
 let damage = 40; 
 let critChance = 0; 
 let creepRegen = 15; // Кріп буде відновлювати 15 ХП кожну секунду
+let creepLevel = 1;
 
 let creepMaxHP = 500;
 let creepCurrentHP = 500;
@@ -14,12 +15,13 @@ const msg = document.getElementById('message');
 const hpText = document.getElementById('hpText');
 const hpBar = document.getElementById('hpBar');
 const armorText = document.getElementById('armorText'); // Новий елемент - текст броні
-
+const levelText = document.getElementById('levelText');
 const btnBuyBlade = document.getElementById('buyQuellingBlade');
 const btnBuyDemon = document.getElementById('buyDemonEdge');
 const btnBuyCrystalys = document.getElementById('buyCrystalys');
 const btnBuyDesolator = document.getElementById('buyDesolator'); // Нова кнопка
 const btnBuySkadi = document.getElementById('buySkadi');
+const maxHpText = document.getElementById('maxHpText');
 
 // 1. ЛОГІКА УДАРУ
 btnHit.addEventListener('click', function() {
@@ -47,24 +49,30 @@ btnHit.addEventListener('click', function() {
     creepCurrentHP = creepCurrentHP - actualDamage;
 
     if (creepCurrentHP <= 0) {
-        gold = gold + 100; 
+        // --- НОВА ЛОГІКА ПРОКАЧКИ КРІПА ---
+        creepLevel = creepLevel + 1; // Підвищуємо рівень
+        
+        // Покращуємо його статі (Баланс можеш придумати свій)
+        creepMaxHP = creepMaxHP + 200; // Кожен левел +200 ХП
+        creepArmor = creepArmor + 2; // Кожен левел +2 броні
+        
+        // Відновлюємо ХП до НОВОГО максимуму
         creepCurrentHP = creepMaxHP; 
         
-        if (isCrit) {
-            msg.textContent = `КРИТ-ЛАСТХІТ на ${actualDamage} (Блоковано: ${creepArmor})! +100 золота.`;
-            msg.style.color = "#ff0000"; 
-        } else {
-            msg.textContent = `Ластхіт на ${actualDamage}! +100 золота.`;
-            msg.style.color = "#ffd700"; 
-        }
-    } else {
-        if (isCrit) {
-            msg.textContent = `КРІТ! Шкода: ${actualDamage} (Броня поглинула ${creepArmor}).`;
-            msg.style.color = "#ff0000"; 
-        } else {
-            msg.textContent = `Шкода: ${actualDamage} (Броня поглинула ${creepArmor}).`;
-            msg.style.color = "#00ff00"; 
-        }
+        // Даємо БІЛЬШЕ голди за вбивство товстого кріпа (наприклад, +50 за кожен левел)
+        let killReward = 100 + (creepLevel * 50); 
+        gold = gold + killReward;
+        // ------------------------------------
+
+// --- НОВИЙ ВІЗУАЛ ---
+        maxHpText.textContent = creepMaxHP; // Оновлюємо праву цифру (наприклад, стане 700)
+        hpBar.max = creepMaxHP; // Збільшуємо місткість самої смужки!
+        armorText.textContent = creepArmor;
+        // --------------------
+        
+        msg.textContent = `Кріп помер! Наступний рівень: ${creepLevel}. Нагорода: ${killReward} голди.`;
+        msg.style.color = "#ffd700";
+        
     }
 
     displayGold.textContent = gold;
@@ -189,3 +197,58 @@ btnBuySkadi.addEventListener('click', function() {
         msg.textContent = "Не вистачає голди на Eye Of Skadi";
     }
 })
+
+// Знаходимо кнопку Дагону
+const btnCastDagon = document.getElementById('castDagon');
+
+// ЛОГІКА ДАГОНУ
+btnCastDagon.addEventListener('click', function() {
+    
+    // 1. Завдаємо шкоди (Дагон ігнорує броню!)
+    let dagonDamage = 300;
+    creepCurrentHP = creepCurrentHP - dagonDamage;
+
+    // Перевіряємо, чи вбили ми кріпа Дагоном
+if (creepCurrentHP <= 0) {
+        // --- НОВА ЛОГІКА ПРОКАЧКИ КРІПА ---
+        creepLevel = creepLevel + 1; // Підвищуємо рівень
+        
+        // Покращуємо його статі (Баланс можеш придумати свій)
+        creepMaxHP = creepMaxHP + 200; // Кожен левел +200 ХП
+        creepArmor = creepArmor + 2; // Кожен левел +2 броні
+        
+        maxHpText.textContent = creepMaxHP; // Оновлюємо праву цифру (наприклад, стане 700)
+        hpBar.max = creepMaxHP; // Збільшуємо місткість самої смужки!
+        armorText.textContent = creepArmor;
+        creepCurrentHP = creepMaxHP; 
+        
+        // Даємо БІЛЬШЕ голди за вбивство товстого кріпа (наприклад, +50 за кожен левел)
+        let killReward = 100 + (creepLevel * 50); 
+        gold = gold + killReward;
+        // ------------------------------------
+
+        // Оновлюємо текст рівня на екрані
+        levelText.textContent = creepLevel;
+        
+        msg.textContent = `Кріп помер! Наступний рівень: ${creepLevel}. Нагорода: ${killReward} голди.`;
+        msg.style.color = "#ffd700";
+    }
+
+    // Оновлюємо візуал
+    displayGold.textContent = gold;
+    hpText.textContent = creepCurrentHP;
+    hpBar.value = creepCurrentHP;
+
+    // 2. ВМИКАЄМО КУЛДАУН
+    btnCastDagon.disabled = true; // Вимикаємо кнопку
+    btnCastDagon.textContent = "Дагон на перезарядці..."; // Міняємо текст
+    btnCastDagon.style.backgroundColor = "#555555"; // Робимо її сірою
+
+    // 3. ТАЙМЕР ЗАТРИМКИ (Повертаємо Дагон через 10 секунд)
+    // setTimeout виконає код всередині рівно 1 раз через вказаний час
+    setTimeout(function() {
+        btnCastDagon.disabled = false; // Вмикаємо кнопку назад
+        btnCastDagon.textContent = "Вдарити Дагоном! (Шкода: 300 | КД: 10 сек)"; // Повертаємо текст
+        btnCastDagon.style.backgroundColor = "#8a2be2"; // Повертаємо фіолетовий колір
+    }, 10000); // 10000 мілісекунд = 10 секунд
+});
